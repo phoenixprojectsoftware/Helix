@@ -1,12 +1,6 @@
-# Half-Life Asset Manager
+# ![txt](helix_logo_text.png "Helix")
 
-> **Note**
-> This program is no longer in development.
-
-Half-Life Asset Manager is a model viewer for Half-Life 1. It can be used to view and edit Half-Life 1 Studio models (`.mdl`).
-
-> **Note**
-> This tool only supports Half-Life 1/GoldSource, not Half-Life 2/Source and Source 2!
+***Helix,*** based on Half-Life Asset Manager, is a model viewer for Half-Life 1. It can be used to view and edit Half-Life 1 Studio models (`.mdl`).
 
 ## Features
 
@@ -32,9 +26,6 @@ See the [changelog](docs/CHANGELOG.md) for a list of changes in each version.
 * Operating system: Windows 7 or newer
 * OpenGL version: 2.1 or newer
 
-> **Note**
-> [Half-Life Model Viewer 2](https://github.com/SamVanheer/HalfLifeModelViewer2) works on Windows XP and newer. If you cannot run Asset Manager then that tool may be a better option.
-
 ### Linux
 
 * Operating System: 64-bit Ubuntu 22.04 or newer
@@ -48,7 +39,9 @@ See the [changelog](docs/CHANGELOG.md) for a list of changes in each version.
 
 ## Download
 
-Beta and public builds can be downloaded here: https://github.com/SamVanheer/HalfLifeAssetManager/releases
+Beta and public builds can be downloaded here: https://github.com/phoenixprojectsoftware/Helix/releases
+
+Helix is also included with the Aura SDK.
 
 ## Installation
 

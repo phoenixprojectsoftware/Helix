@@ -1,4 +1,4 @@
-target_sources(HLAM
+target_sources(Helix
 	PRIVATE
 		AttachmentsPanel.cpp
 		AttachmentsPanel.hpp

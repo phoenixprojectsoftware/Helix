@@ -1,4 +1,4 @@
-target_sources(HLAM
+target_sources(Helix
 	PRIVATE
 		ByteLengthValidator.hpp
 		HashFunctions.hpp

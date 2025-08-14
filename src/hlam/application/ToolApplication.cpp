@@ -119,7 +119,7 @@ int ToolApplication::Run(int argc, char* argv[])
 		// Set the codec to UTF-8 if possible so I/O operations produce proper filenames.
 		QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
 
-		const QString programName{QStringLiteral("Half-Life Asset Manager")};
+		const QString programName{QStringLiteral("Helix")};
 
 		ConfigureApplication(programName);
 		ConfigureOpenGL();

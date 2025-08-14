@@ -51,15 +51,10 @@ void ShowAboutDialog(QWidget* parent)
 		QString::fromUtf8(
 			reinterpret_cast<const char*>(u8R"(%1 %2
 
-2024 Sam Vanheer
+2025 The Phoenix Project Software SVG
 
-Email:	sam.vanheer@outlook.com
-
-Build Configuration: %3
-Git Info:
-	Branch: %4
-	Tag: %5
-	Commit Hash: %6
+Based on Half-Life Asset Manager v3.0 (c) 2024 Sam Vanheer
+Email: sam.vanheer@outlook.com
 
 Based on Jed's Half-Life Model Viewer v1.3 (c) 2004 Neil 'Jed' Jedrzejewski
 Email:	jed@wunderboy.org
@@ -88,12 +83,8 @@ Build Date: %9
 )"))
 			.arg(programName)
 			.arg(GetVersionInfo())
-			.arg(GetBuildConfiguration())
-			.arg(QString::fromUtf8(HLAMGitBranchName))
-			.arg(QString::fromUtf8(HLAMGitTagName))
-			.arg(QString::fromUtf8(HLAMGitCommitHash))
 			.arg(alVersion)
 			.arg(QT_VERSION_STR)
-			.arg(__DATE__)
+			.arg(__TIMESTAMP__)
 );
 }

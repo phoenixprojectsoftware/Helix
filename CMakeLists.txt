@@ -11,11 +11,11 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO ${CMAKE_BINARY_DIR})
 
 set(HLAM_VERSION_MAJOR 3)
 set(HLAM_VERSION_MINOR 0)
-set(HLAM_VERSION_PATCH 0)
+set(HLAM_VERSION_PATCH 1)
 
-project(HalfLifeAssetManager
+project(Helix
 	VERSION ${HLAM_VERSION_MAJOR}.${HLAM_VERSION_MINOR}.${HLAM_VERSION_PATCH}
-	DESCRIPTION "Half-Life Asset Manager"
+	DESCRIPTION "Helix"
 	LANGUAGES CXX)
 
 # Default to Alpha. CI builds will always be Alpha builds.
@@ -85,25 +85,25 @@ if (MSVC)
 	configure_file(${CMAKE_CURRENT_SOURCE_DIR}/src/hlam/version.rc.in ${CMAKE_CURRENT_BINARY_DIR}/version_generated.rc @ONLY)
 endif()
 
-add_executable(HLAM WIN32)
+add_executable(Helix WIN32)
 
 # Follow Linux naming conventions.
 if (LINUX)
-	set_target_properties(HLAM PROPERTIES OUTPUT_NAME "hlam")
+	set_target_properties(Helix PROPERTIES OUTPUT_NAME "Helix")
 endif()
 
-add_dependencies(HLAM ProjectInfo)
+add_dependencies(Helix ProjectInfo)
 
-target_compile_features(HLAM
+target_compile_features(Helix
 	PRIVATE
 		cxx_std_20)
 
-target_include_directories(HLAM
+target_include_directories(Helix
 	PRIVATE
 		${CMAKE_CURRENT_SOURCE_DIR}/src/hlam
 		${CMAKE_BINARY_DIR})
 
-target_compile_definitions(HLAM
+target_compile_definitions(Helix
 	PRIVATE
 		QT_MESSAGELOGCONTEXT
 		$<$<CXX_COMPILER_ID:MSVC>:
@@ -114,7 +114,7 @@ target_compile_definitions(HLAM
 		$<$<CXX_COMPILER_ID:GNU,Clang,AppleClang>:
 			FILE_OFFSET_BITS=64>)
 
-target_link_libraries(HLAM
+target_link_libraries(Helix
 	PRIVATE
 		Qt5::Widgets
 		Qt5::Network
@@ -125,22 +125,22 @@ target_link_libraries(HLAM
 		${CMAKE_DL_LIBS}
 		libnyquist)
 
-target_compile_options(HLAM
+target_compile_options(Helix
 	PRIVATE
 		$<$<CXX_COMPILER_ID:MSVC>:/MP /fp:strict>
 		$<$<CXX_COMPILER_ID:GNU,Clang,AppleClang>:-fPIC>)
 
-target_link_options(HLAM
+target_link_options(Helix
 	PRIVATE
 		$<$<CXX_COMPILER_ID:GNU,Clang,AppleClang>:-Wl,--exclude-libs,ALL>)
 
-target_sources(HLAM
+target_sources(Helix
 	PRIVATE
 		src/hlam/Main.cpp
 		src/hlam/resources.qrc)
 
 if (MSVC)
-	target_sources(HLAM PRIVATE src/hlam/hlam.rc src/hlam/version.rc)
+	target_sources(Helix PRIVATE src/hlam/hlam.rc src/hlam/version.rc)
 endif()
 
 add_subdirectory(src/hlam/application)
@@ -156,47 +156,47 @@ add_subdirectory(src/hlam/ui)
 add_subdirectory(src/hlam/utility)
 
 #Create filters
-get_target_property(SOURCE_FILES HLAM SOURCES)
+get_target_property(SOURCE_FILES Helix SOURCES)
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/src/hlam FILES ${SOURCE_FILES})
 
 # Add this after source_group to avoid errors with root paths
-target_sources(HLAM PRIVATE ${CMAKE_BINARY_DIR}/ProjectInfo.hpp)
+target_sources(Helix PRIVATE ${CMAKE_BINARY_DIR}/ProjectInfo.hpp)
 
 # Copy runtime dependencies automatically for dev builds.
-add_custom_command(TARGET HLAM POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:OpenAL::OpenAL> $<TARGET_FILE_DIR:HLAM>
-	COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:Qt5::Core> $<TARGET_FILE_DIR:HLAM>
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:Qt5::Gui> $<TARGET_FILE_DIR:HLAM>
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:Qt5::Widgets> $<TARGET_FILE_DIR:HLAM>
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:Qt5::Network> $<TARGET_FILE_DIR:HLAM>
+add_custom_command(TARGET Helix POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:OpenAL::OpenAL> $<TARGET_FILE_DIR:Helix>
+	COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:Qt5::Core> $<TARGET_FILE_DIR:Helix>
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:Qt5::Gui> $<TARGET_FILE_DIR:Helix>
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:Qt5::Widgets> $<TARGET_FILE_DIR:Helix>
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:Qt5::Network> $<TARGET_FILE_DIR:Helix>
 )
 
 # Copy plugins so the program can run
-copy_qt_dependencies(HLAM Qt5Core_PLUGINS)
-copy_qt_dependencies(HLAM Qt5Gui_PLUGINS)
-copy_qt_dependencies(HLAM Qt5Widgets_PLUGINS)
-copy_qt_dependencies(HLAM Qt5Network_PLUGINS)
+copy_qt_dependencies(Helix Qt5Core_PLUGINS)
+copy_qt_dependencies(Helix Qt5Gui_PLUGINS)
+copy_qt_dependencies(Helix Qt5Widgets_PLUGINS)
+copy_qt_dependencies(Helix Qt5Network_PLUGINS)
 
-set_property(DIRECTORY ${CMAKE_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT HLAM)
+set_property(DIRECTORY ${CMAKE_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT Helix)
 
 # On Windows the executable is installed in its own directory.
 # On Linux it's installed in a global location and must follow platform conventions.
 if (WIN32)
-	install(TARGETS HLAM RUNTIME DESTINATION .)
-	install(FILES "docs/manual/HalfLifeAssetManagerManual.pdf" DESTINATION "manual")
+	install(TARGETS Helix RUNTIME DESTINATION .)
+	install(FILES "docs/manual/HelixManual.pdf" DESTINATION "manual")
 else()
 	include(GNUInstallDirs)
 
 	# Qt searches in "dataroot/orgname/appname" which is why this is nested.
-	set(APP_LOCAL_DIR "${CMAKE_INSTALL_DATAROOTDIR}/Half-Life Asset Manager/Half-Life Asset Manager")
+	set(APP_LOCAL_DIR "${CMAKE_INSTALL_DATAROOTDIR}/Helix/Helix")
 
-	install(TARGETS HLAM RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+	install(TARGETS Helix RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 	install(FILES "distribution/linux/hlam.desktop" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/applications")
 	install(FILES "assets/hlam_icon2_golden_finished.png" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/128x128/apps" RENAME "hlam.png")
-	install(FILES "docs/manual/HalfLifeAssetManagerManual.pdf" DESTINATION "${APP_LOCAL_DIR}")
+	install(FILES "docs/manual/HelixManual.pdf" DESTINATION "${APP_LOCAL_DIR}")
 	
 	# CPack is only used for Linux versions.
-	set(CPACK_PACKAGE_CONTACT "https://github.com/SamVanheer/HalfLifeAssetManager")
+	set(CPACK_PACKAGE_CONTACT "https://github.com/phoenixprojectsoftware/Helix")
 	set(CPACK_DEBIAN_FILE_NAME "DEB-DEFAULT")
 	set(CPACK_DEBIAN_PACKAGE_SECTION "editors")
 	set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)

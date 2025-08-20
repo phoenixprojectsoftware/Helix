@@ -45,14 +45,14 @@ jobs:
       
       - name: Prepare artifacts
         run: |
-          mkdir "Half-Life Asset Manager"
-          mv build/hlam "Half-Life Asset Manager"
+          mkdir "Helix"
+          mv build/Helix "Helix"
       
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
           name: Linux-x64
-          path: "Half-Life Asset Manager"
+          path: "Helix"
 
   win32:
     name: Win32

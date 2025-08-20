@@ -37,7 +37,7 @@ jobs:
          
       - name: Configure
         run: >
-          cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+          cmake -B ${{github.workspace}}/build -DCMAKE_POLICY_VERSION_MINIMUM 3.5 -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
           -DCMAKE_TOOLCHAIN_FILE=${{github.workspace}}/vcpkg/scripts/buildsystems/vcpkg.cmake -G Ninja
       
       - name: Build

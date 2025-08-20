@@ -23,7 +23,9 @@ jobs:
           submodules: recursive
          
       - name: Install Qt
-        run: sudo apt install -y qtbase5-dev
+        run: |
+            sudo apt-get update --fix-missing
+            sudo apt install -y qtbase5-dev
           
       - uses: lukka/get-cmake@latest
       
